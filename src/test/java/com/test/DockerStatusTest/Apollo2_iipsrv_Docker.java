@@ -21,6 +21,7 @@ public class Apollo2_iipsrv_Docker {
         String password = "Health#123"; 
 
         String containerId = "216d7ffbed10"; 
+	System.out.println("apollo2 iipsrv docker id = "+containerId);
 
 
 
