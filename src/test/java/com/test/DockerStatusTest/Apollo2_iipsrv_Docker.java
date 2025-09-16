@@ -56,7 +56,7 @@ public class Apollo2_iipsrv_Docker {
 
             // If not running, send alert
             if (!isRunning) {
-                sendEmailAlert("Nathan bro 😩,\n\n"+"🚨 This is Apollo2 IIPSRV Docker. I am currently down. Kindly restart the container at your earliest convenience.");
+                sendEmailAlert("Hi,\n\n"+"🚨 This is Apollo2 IIPSRV Docker. I am currently down. Kindly restart the container at your earliest convenience.");
                 assert false : "Container is not in the expected state.";
             }
 
@@ -67,8 +67,19 @@ public class Apollo2_iipsrv_Docker {
 
     public void sendEmailAlert(String messageBody) {
         String from = "automationsoftware25@gmail.com";
-        String to = "nathan.i@htic.iitm.ac.in";
-        String cc = "azizahammed.a@htic.iitm.ac.in,satheskumar@htic.iitm.ac.in";
+        // TO recipients
+        String[] to = {
+            "nitheshkumarsundhar@gmail.com",
+            "ramanan@htic.iitm.ac.in"
+        };
+
+        // CC recipients
+        String[] cc = {
+            "divya.d@htic.iitm.ac.in",
+            "venip@htic.iitm.ac.in",
+            "meena@htic.iitm.ac.in",
+            "gayathri@htic.iitm.ac.in"
+        };
         String subject = "Docker Container Alert - Apollo2 iipsrv";
         final String username = "automationsoftware25@gmail.com";
         final String password = "wjzcgaramsqvagxu";  
@@ -88,8 +99,14 @@ public class Apollo2_iipsrv_Docker {
         try {
             Message message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress(from, "Docker Monitor"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc));
+            message.setRecipients(
+                Message.RecipientType.TO,
+                InternetAddress.parse(String.join(",", to))
+            );
+            message.setRecipients(
+                Message.RecipientType.CC,
+                InternetAddress.parse(String.join(",", cc))
+            );
             message.setSubject(subject);
             message.setText(messageBody);
 
