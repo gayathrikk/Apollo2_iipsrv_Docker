@@ -15,7 +15,7 @@ public class Apollo2_iipsrv_Docker {
 
     @Test(priority = 1)
     public void containerStatus() {
-        String vmIpAddress = "172.20.23.136";
+        String vmIpAddress = "172.16.20.232";
         String sshUsername = "hbp";
         String sshPassword = "Health#123";
         String containerId = "216d7ffbed10";
