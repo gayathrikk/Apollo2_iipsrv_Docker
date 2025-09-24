@@ -18,11 +18,10 @@ public class Apollo2_iipsrv_Docker {
         String vmIpAddress = "172.16.20.232";
         String sshUsername = "hbp";
         String sshPassword = "Health#123";
-        String containerId = "216d7ffbed10";
-        
+        String containerName = "iipsrv";   
 
-        if (containerId.isEmpty()) {
-            System.out.println("Container ID is required.");
+        if (containerName.isEmpty()) {
+            System.out.println("Container name is required.");
             return;
         }
 
@@ -34,9 +33,9 @@ public class Apollo2_iipsrv_Docker {
             sshSession.setConfig("StrictHostKeyChecking", "no");
             sshSession.connect();
 
-            // Run docker inspect command
+            // Run docker inspect command using NAME
             ChannelExec channel = (ChannelExec) sshSession.openChannel("exec");
-            channel.setCommand("docker inspect --format='{{.State.Status}}' " + containerId);
+            channel.setCommand("docker inspect --format='{{.State.Status}}' " + containerName);
             channel.setInputStream(null);
             channel.setErrStream(System.err);
             BufferedReader reader = new BufferedReader(new InputStreamReader(channel.getInputStream()));
@@ -56,7 +55,7 @@ public class Apollo2_iipsrv_Docker {
 
             // If not running, send alert
             if (!isRunning) {
-                sendEmailAlert("Hi,\n\n"+"🚨 This is Apollo2 IIPSRV Docker. I am currently down. Kindly restart the container at your earliest convenience.");
+                sendEmailAlert("Hi,\n\n🚨 This is Apollo2 IIPSRV Docker. I am currently down. Kindly restart the container at your earliest convenience.");
                 assert false : "Container is not in the expected state.";
             }
 
